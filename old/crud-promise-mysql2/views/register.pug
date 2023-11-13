@@ -1,0 +1,8 @@
+extends layout
+block content
+  div.container
+    h2 Register
+    form.form-container(action='/register/' method='POST')
+      input.form-input(name='name' type='text' value=name placeholder='Name')
+      input.form-input(name='password' type='text' value=password placeholder='Password')
+      input.form-submit(type='submit' value='Register')

@@ -1,0 +1,12 @@
+extends layout
+block content
+  div.container
+    table
+      thead
+        tr.list-header
+          th.list-header-th Name
+          th.list-header-th Password
+      body
+        tr.list
+          td #{user.name}
+          td #{user.password}

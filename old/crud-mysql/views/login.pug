@@ -1,0 +1,8 @@
+extends layout
+block content
+  div.container
+    h2 Login
+    form.form-container(action='/login' method='POST')
+      input.form-input(name='name' type='text' value=name placeholder='Name')
+      input.form-input(name='password' type='text' value=password placeholder='Password')
+      input.form-submit(type='submit' value='Login')

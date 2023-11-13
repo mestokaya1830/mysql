@@ -1,0 +1,11 @@
+extends layout
+block content
+  div.container
+    h2 Contact
+    form.form-container(action='/admin/contact' method='POST')
+      input.form-input(type='email' name='emailTo' aria-describedby='emailHelp' placeholder='Enter email')
+      input.form-input(type='text' name='subject' placeholder='subject')
+      label Type your message
+      br
+      textarea.form-area(name='email' rows='5')
+      input.form-submit(type='submit' value='Send Email') 

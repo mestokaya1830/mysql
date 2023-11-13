@@ -1,0 +1,7 @@
+extends layout
+block content
+  div.container
+    h2 #{user.name}
+    form.form-container(action = `/admin/edituser/${user.id}` method='POST')
+      input.form-input(type='text', name='password', value = user.password, placeholder='password')
+      input.form-submit(type='submit' value='Save')

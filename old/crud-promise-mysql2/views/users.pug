@@ -1,0 +1,21 @@
+extends layout
+block content
+  div.container
+    form(action="/admin/users/search", method="post")
+      input(type="text", name="name" placeholder="Search").search
+    table
+      thead
+        tr.list-header
+          th.list-header-th Name
+          th.list-header-th Date
+          th.list-btn-container Proccess
+      body
+        each item in users
+          tr.list
+            td #{item.name}
+            td #{moment(item.date).format('DD-MM-yyyy')}
+            //- td #{new Date(item.date).toLocaleDateString('tr')}
+            td.form-btn-container(style = "width:260px")
+              a.form-btn.primary(href=`detailuser/${item.id}`) Details
+              a.form-btn.warning(href=`edituser/${item.id}`) Edit
+              a.form-btn.danger(href=`deleteuser/${item.id}`) Delete
