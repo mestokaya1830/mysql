@@ -1,0 +1,4 @@
+
+mysql -u root -p
+mysqldump -p db > db.sql --- backup
+mysql -u root -p db < db.sql --- restore

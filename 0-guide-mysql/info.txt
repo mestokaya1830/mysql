@@ -1,0 +1,20 @@
+
+sudo mysql -u root -p then below
+
+SHOW  PROCESSLIST\G
+SHOW COLLATION;
+SHOW COLLATION LIKE 'utf%';
+SHOW ERRORS\G
+SELECT @@error_count;
+SHOW WARNINGS\G;
+SELECT @@warning_count;
+SHOW GRANTS FOR 'root'@'localhost';
+SHOW PLUGINS\G
+SHOW PRIVILEGES\G
+SHOW VARIABLES LIKE 'time%';
+SHOW VARIABLES\G;
+SHOW VARIABLES LIKE 'innodb%';
+Select @@global.max_allowed_packet;
+SHOW STATUS LIKE "qcache%";
+SHOW STATUS LIKE "threads%";
+SHOW VARIABLES LIKE "max_connections";

@@ -1,0 +1,17 @@
+
+create private user------------------------------------------------------
+DROP USER 'username'@'host';
+SELECT User, Host FROM mysql.user;
+SHOW GRANTS FOR 'testuser'@'localhost';
+SELECT db, host, user FROM mysql.db;
+SELECT db, host, user FROM mysql.db WHERE db = 'db';
+SELECT * FROM mysql.db WHERE Db = 'db'\G;
+
+CREATE USER 'mesto'@'localhost' IDENTIFIED BY '123';
+GRANT ALL ON *.* TO 'mesto'@'localhost';//for all database
+GRANT ALL PRIVILEGES ON gasvet.* TO 'mesto'@'localhost';
+ALTER USER 'mesto'@'localhost' IDENTIFIED WITH mysql_native_password BY '123';
+GRANT SELECT, INSERT, DELETE ON testdb1.* TO testuser@'localhost';//spesific grant
+FLUSH PRIVILEGES;
+
+REVOKE ALL PRIVILEGES ON testdb.* FROM 'testuser'@'localhost';

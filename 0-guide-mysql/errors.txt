@@ -1,0 +1,6 @@
+
+some errors------------------------------------------------------------------
+systemctl unmask mysql.service
+systemctl status mysql.service
+sudo mysql_secure_installation
+sudo systemctl restart mysql

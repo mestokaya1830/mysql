@@ -1,0 +1,19 @@
+
+CREATE TABLE users (
+    ID int NOT NULL AUTO_INCREMENT,
+    name varchar(50) NOT NULL,
+    password varchar(255),
+    date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    proccess int Null Default 0,
+    PRIMARY KEY (ID)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+drop table test;
+ALTER TABLE test ADD COLUMN phone VARCHAR(15) AFTER state;
+ALTER TABLE basketfixtures ENGINE = MyISAM;
+ALTER TABLE basketfixtures ROW_FORMAT=fixed;
+ALTER TABLE betsummaryALTER COLUMN woncount SET DEFAULT '0';
+
+SHOW TABLES;
+DESCRIBE  users;
+
