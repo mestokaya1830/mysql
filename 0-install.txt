@@ -1,0 +1,38 @@
+
+sudo apt update
+sudo apt install mysql-server
+sudo systemctl restart mysql
+Close terminal
+👉️ ALTER PASSWORD
+ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'mk1972mk';
+flush privileges;
+Close terminal
+
+Uninstall mysql--------------------------------------------------------------
+sudo apt-get remove --purge mysql-server mysql-client mysql-common -y
+sudo apt-get remove --purge *mysql\*
+sudo apt-get autoremove -y
+sudo apt-get autoclean
+sudo rm -r /etc/mysql
+sudo rm -r /var/lib/mysql
+sudo rm -r /var/lib/mysql-files
+sudo rm -r /var/lib/mysql-keyring
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

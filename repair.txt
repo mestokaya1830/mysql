@@ -1,0 +1,2 @@
+
+mysqlcheck -u root -p --auto-repair --optimize --all-databases

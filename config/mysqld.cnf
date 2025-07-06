@@ -1,0 +1,75 @@
+
+[mysqld_safe]
+socket		= /var/run/mysqld/mysqld.sock
+nice		= 0
+
+[mysqld]
+#
+# * Basic Settings
+#
+user		= mysql
+pid-file	= /var/run/mysqld/mysqld.pid
+socket		= /var/run/mysqld/mysqld.sock
+port		= 3306
+basedir		= /usr
+datadir		= /var/lib/mysql
+tmpdir		= /tmp
+lc-messages-dir	= /usr/share/mysql
+skip-external-locking
+
+# * Fine Tuning
+max_connections        = 240
+thread_cache_size      = 30
+key_buffer_size		= 16M
+max_allowed_packet	= 16M
+thread_stack		= 192K
+thread_cache_size       = 8
+#
+net_read_timeout       = 30
+net_write_timeout      = 60
+key_buffer_size		     = 16M
+thread_stack		       = 192K
+#
+# This replaces the startup script and checks MyISAM tables if needed
+# the first time they are touched
+myisam-recover-options  = BACKUP
+#
+max_allowed_packet	   = 16M
+wait_timeout           = 100
+interactive_timeout    = 100
+connect_timeout        = 1000
+#
+table_open_cache       = 700
+open_files_limit       = 1400
+#
+# * Query Cache Configuration
+#
+query_cache_type  = 1
+query_cache_limit	= 4M
+query_cache_size  = 64M
+#
+log_error = /var/log/mysql/error.log
+#
+slow_query_log		  = 2
+long_query_time     = 5
+slow_query_log_file	= /var/log/mysql/mysql-slow.log
+#
+expire_logs_days	= 10
+max_binlog_size   = 100M
+# * InnoDB
+innodb_buffer_pool_size      = 1200M
+innodb_buffer_pool_instances = 1
+innodb_read_io_threads       = 1
+innodb_write_io_threads      = 1
+innodb_log_buffer_size      = 8M
+innodb_log_file_size        = 128M
+innodb_max_dirty_pages_pct  = 80
+innodb_lock_wait_timeout    = 120
+innodb_autoextend_increment = 128M
+innodb_thread_concurrency   = 16
+innodb_flush_method         = O_DIRECT 
+#
+# For generating SSL certificates I recommend the OpenSSL GUI "tinyca".
+# ssl-ca=/etc/mysql/cacert.pem
+# ssl-cert=/etc/mysql/server-cert.pem
+# ssl-key=/etc/mysql/server-key.pem

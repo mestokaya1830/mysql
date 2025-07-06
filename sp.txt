@@ -1,0 +1,324 @@
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `soccerfixtures`()
+    READS SQL DATA
+BEGIN
+	SELECT fixtureid, RegionId, RegionName, startdate, leagueid, leaguename,HomeTeam, AwayTeam, home,draw,away, under, over, yes, no FROM soccerfixtures;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `basketfixtures`()
+    READS SQL DATA
+BEGIN
+	SELECT fixtureid, RegionId, RegionName, startdate, leagueid, leaguename,HomeTeam, AwayTeam, home, away, under, underodds, over, overodds, han1, han1attr, han2, han2attr FROM basketfixtures;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `login1`(IN `u` VARCHAR(50))
+    READS SQL DATA
+BEGIN
+	SELECT * FROM users WHERE user = u LIMIT 1;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `login2`(IN `u` VARCHAR(50))
+    READS SQL DATA
+BEGIN
+	SELECT sk, sa FROM settime WHERE user = u;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `logout1`(IN `u` VARCHAR(50))
+    MODIFIES SQL DATA
+BEGIN
+	UPDATE users SET sessioncount = sessioncount - 1 WHERE user = u;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `logout2`(IN `u` VARCHAR(50))
+    READS SQL DATA
+BEGIN
+	SELECT sessioncount FROM users WHERE user = u;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `logout3`(IN `lc` CHAR(10), IN `u` VARCHAR(50))
+    MODIFIES SQL DATA
+BEGIN
+	UPDATE users SET logincheck = lc WHERE user = u;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `userlist`(IN `a` VARCHAR(50))
+BEGIN
+  SELECT user FROM users WHERE admin = a;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `users`(IN `a` VARCHAR(50))
+BEGIN
+  SELECT user, role, admin, credit, creditremain, state, userlimit, usedlimit, payment, autopay FROM users WHERE admin = a ORDER BY user;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usersid`(IN `u` VARCHAR(50))
+BEGIN
+  SELECT * FROM users WHERE user = u LIMIT 1;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `activeusers`(IN `a` VARCHAR(50), IN `lc` CHAR(10))
+    READS SQL DATA
+BEGIN
+	SELECT Count(*) As count FROM users  WHERE admin = a AND logincheck = lc LIMIT 1;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `creditinfo1`(IN `u` VARCHAR(50))
+BEGIN
+  SELECT credit, creditremain FROM users WHERE user = u;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `creditinfo2`(IN `a` VARCHAR(50))
+BEGIN
+  SELECT SUM(creditremain) AS creditremainsum, SUM(credit) AS creditsum FROM users WHERE admin = a;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `activeinfo1`(IN `u` VARCHAR(50), IN `s` CHAR(10))
+    READS SQL DATA
+BEGIN
+  SELECT COUNT(id) AS activecount, SUM(amount) AS activeamount, SUM(earn) AS activeearn FROM betsummary WHERE user = u AND state = s;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `activeinfo2`(IN `a` VARCHAR(50), IN `s` CHAR(10))
+    READS SQL DATA
+BEGIN
+  SELECT COUNT(id) AS activecount, SUM(amount) AS activeamount, SUM(earn) AS activeearn FROM betsummary WHERE admin = a AND state = s;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `woninfo1`(IN `u` VARCHAR(50), IN `s` CHAR(10))
+    READS SQL DATA
+BEGIN
+ SELECT COUNT(id) AS woncount, SUM(amount) AS wonamount, SUM(earn) AS wonearn FROM betsummary WHERE user = u AND state = s;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `woninfo2`(IN `a` VARCHAR(50), IN `s` CHAR(10))
+    READS SQL DATA
+BEGIN
+ SELECT COUNT(id) AS woncount, SUM(amount) AS wonamount, SUM(earn) AS wonearn FROM betsummary WHERE admin = a AND state = s;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `lostinfo1`(IN `u` VARCHAR(50), IN `s` CHAR(10))
+    READS SQL DATA
+BEGIN
+  SELECT COUNT(id) AS lostcount, SUM(amount) AS lostamount FROM betsummary WHERE user = u AND state = s;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `lostinfo2`(IN `a` VARCHAR(50), IN `s` CHAR(10))
+    READS SQL DATA
+BEGIN
+	SELECT COUNT(id) AS lostcount, SUM(amount) AS lostamount FROM betsummary WHERE admin = a AND state = s;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `totalinfo1`(IN `u` VARCHAR(50), IN `s1` CHAR(10), IN `s2` CHAR(10))
+    READS SQL DATA
+BEGIN
+ SELECT COUNT(id) AS totalcount, SUM(amount) AS totalamount, SUM(earn) AS totalearn FROM betsummary WHERE user = u AND state != s1 AND state != s2;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `totalinfo2`(IN `a` VARCHAR(50), IN `s1` CHAR(10), IN `s2` CHAR(10))
+    READS SQL DATA
+BEGIN
+	SELECT COUNT(id) AS totalcount, SUM(amount) AS totalamount, SUM(earn) AS totalearn FROM betsummary WHERE admin = a AND state != s1 AND state != s2;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `usercomission`(IN `u` VARCHAR(50))
+BEGIN
+  SELECT usercomission FROM users WHERE user = u LIMIT 1;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsum1`(IN `u` VARCHAR(50))
+    READS SQL DATA
+BEGIN
+SELECT * FROM betsummary WHERE user = u  ORDER BY id DESC;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsum2`(IN `u` VARCHAR(50), IN `s` CHAR(10))
+    READS SQL DATA
+BEGIN
+  SELECT * FROM betsummary WHERE user = u AND state = s  ORDER BY id DESC;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsum3`(IN `a` VARCHAR(50))
+    READS SQL DATA
+BEGIN
+ SELECT * FROM betsummary  WHERE admin = a  ORDER BY id DESC;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsum4`(IN `a` VARCHAR(50), IN `s` CHAR(10))
+    READS SQL DATA
+BEGIN
+ SELECT * FROM betsummary  WHERE admin = a AND state = s  ORDER BY id DESC;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsum5`(IN `sa` VARCHAR(50), IN `s` CHAR(10))
+    READS SQL DATA
+BEGIN
+  SELECT * FROM betsummary WHERE superadmin = sa AND state = s;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsumid`(IN `b` INT(11))
+    READS SQL DATA
+BEGIN
+  SELECT * FROM bets  WHERE betid = b ORDER by id DESC;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betstate1`(IN `i` INT(11))
+    READS SQL DATA
+BEGIN
+	SELECT state FROM bets WHERE id = i LIMIT 1;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betstate2`(IN `s` CHAR(10), IN `i` INT(11))
+    MODIFIES SQL DATA
+BEGIN
+	UPDATE bets SET state = s WHERE id = i;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betstate3`(IN `i` INT(11))
+    MODIFIES SQL DATA
+BEGIN
+	UPDATE betsummary SET betscountremain = betscountremain + 1 WHERE id = i;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betstate4`(IN `i` INT(11))
+    MODIFIES SQL DATA
+BEGIN
+	UPDATE betsummary SET betscountremain = betscountremain - 1 WHERE id = i;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betstate5`(IN `i` INT(11))
+    MODIFIES SQL DATA
+BEGIN
+	UPDATE betsummary SET betscountremain = betscountremain WHERE id = i;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsumstate1`(IN `i` INT(11))
+    READS SQL DATA
+BEGIN
+	SELECT id, state, role, adminpay FROM betsummary WHERE id = i LIMIT 1;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsumstate2`(IN `s` CHAR(10), IN `i` INT(11))
+    MODIFIES SQL DATA
+BEGIN
+	UPDATE betsummary SET state = s WHERE id = i;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsumstate3`(IN `ap` CHAR(10), IN `i` INT(11))
+    READS SQL DATA
+BEGIN
+	UPDATE betsummary SET adminpay = ap WHERE id = i;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsumstate4`(IN `s` CHAR(10), IN `i` INT(11))
+    READS SQL DATA
+BEGIN
+	SELECT state FROM bets WHERE state = s AND betid = i;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsumstate5`(IN `r` DECIMAL(10,2) , IN `e` DECIMAL(10,2), IN `i` INT(11))
+    MODIFIES SQL DATA
+BEGIN
+	UPDATE betsummary SET rate = r, earn = e WHERE id = i;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsumstate6`(IN `e` DECIMAL(10,2), IN `i` INT(11))
+    MODIFIES SQL DATA
+BEGIN
+	UPDATE betsummary SET earn = e WHERE id = i;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsumstate7`(IN `u` VARCHAR(50))
+    READS SQL DATA
+BEGIN
+	SELECT creditremain FROM users WHERE user = u;
+END$$
+DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `betsumstate8`(IN `u` VARCHAR(50))
+    READS SQL DATA
+BEGIN
+	SELECT personcomission FROM users WHERE user = u LIMIT 1;
+END$$
+DELIMITER ;
+
+
+

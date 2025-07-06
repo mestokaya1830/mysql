@@ -1,0 +1,90 @@
+👉️ GET GENDER AS NULL
+SELECT * FROM customers WHERE gender is Null;
+
+
+👉️ GET COUNTRY (NO DUPPLICATE)
+SELECT DISTINCT cuntry FROM customers;
+
+
+👉️ GET COUNTRY LENGTH MUST BE 4
+SELECT country FROM customers WHERE LENGTH(country) = 4;
+
+
+👉️ GET CUSTOMERS-COUNT AS COUNTRY
+SELECT country, COUNT(*) FROM customers  GROUP BY country;
+
+
+👉️ GET CUSTOMERS-AVARAGE-AGE AS COUNTRY
+SELECT country, AVG(age) FROM customers  GROUP BY country;
+
+
+👉️ GET CUSTOMERS_ID WHO HAS ORDERS //💥️ wir dont need two tables because orders table has own custoomer_id
+SELECT COUNT(*) FROM orders  GROUP BY customer_id;
+
+
+👉️ GET THREE OLDEST CUSTOMERS
+SELECT age FROM customers ORDER BY age DESC LIMIT 3;
+
+
+**************************Multiple Tables**********************************
+
+
+👉️ GET MUSTAFA'S ORDERS_COUNT
+SELECT COUNT(*) FROM orders WHERE customer_id = (SELECT id FROM customers WHERE name = 'Mustafa' GROUP BY id);
+
+👉️ GET MUSTAFA'S ORDERS
+SELECT * FROM orders WHERE customer_id = (SELECT id FROM customers WHERE name = 'Mustafa')
+
+	😂️ with join (with join you can get both tables columns)
+	SELECT * FROM orders 
+	JOIN customers
+	ON orders.customer_id = customers.id
+	WHERE name = 'Mustafa';
+	
+
+👉️ GET TURKEY'S ORDERS_COUNT
+SELECT COUNT(*) FROM orders WHERE customer_id IN(SELECT id FROM customers WHERE country = 'Turkey' GROUP BY country)
+	
+👉️ GET TURKEY'S ORDERS
+SELECT * FROM orders WHERE customer_id IN(SELECT id FROM customers WHERE country = 'Turkey')
+
+	😂️ with join (with join you can get both tables columns)
+	SELECT * FROM orders 
+	JOIN customers
+	ON orders.customer_id = customers.id
+	WHERE country = 'Turkey';
+
+👉️ GET CUSTOMERS INFO WHO HAS ORDERS
+SELECT name, COUNT(*) FROM customers 
+JOIN orders 
+ON orders.customer_id = customers.id 
+GROUP BY customers.id;
+
+
+👉️ GET CUSTOMERS INFO, TOTAL-ORDERS AND TOTAL-AMOUNT WHO HAS ORDERS
+SELECT name, COUNT(*), SUM(orders.total) FROM customers
+JOIN orders 
+ON orders.customer_id = customers.id 
+GROUP BY customers.id;
+
+
+👉️ GET CUSTOMERS INFO AND ORDERS-COUNT GREATHER THEN 2 WHO HAS ORDERS
+SELECT name, count(*) FROM customers
+JOIN orders 
+ON orders.customer_id = customers.id 
+GROUP BY customers.id
+HAVING COUNT(*) >= 2;
+
+
+👉️ GET PRODUCTS LIST THAT mUSTAFA'S ORDERS
+SELECT customers.name, products.`productName`, products.price, orders.quantity, orders.total FROM products 
+JOIN orders ON orders.product_id = products.id
+JOIN customers ON customers.id = orders.customer_id
+WHERE name = 'Mustafa'  LIMIT 100
+
+
+
+
+
+
+
