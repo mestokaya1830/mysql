@@ -19,8 +19,8 @@ sudo rm -r /var/lib/mysql-files
 sudo rm -r /var/lib/mysql-keyring
 
 
-
-
+login
+mysql -u root -p
 
 
 
